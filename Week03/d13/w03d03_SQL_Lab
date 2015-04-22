@@ -1,0 +1,257 @@
+﻿CREATE DATABASE apartmentlab;
+
+\connect apartmentlab
+
+-- CREATE TABLE authors 
+-- 		(id SERIAL PRIMARY  KEY,
+-- 		first_name VARCHAR(100), 
+-- 		last_name VARCHAR(100));
+-- 
+-- INSERT INTO authors (first_name, last_name)
+-- VALUES ('F. Scott', 'Fitzgerald');
+
+-- ALTER TABLE books ADD COLUMN author_id INTEGER;
+-- ALTER TABLE books ADD CONSTRAINT author_fk 
+-- FOREIGN KEY (author_id) REFERENCES authors (id)
+-- ON DELETE NO ACTION;
+
+--########################################################
+-- Reset
+--########################################################
+
+DROP TABLE properties CASCADE;
+DROP TABLE owners;
+
+--#######################################################
+-- Create tables 
+--#######################################################
+
+CREATE TABLE owners (
+		owner_id SERIAL PRIMARY KEY,
+		name varchar(100),
+		age INTEGER);
+
+CREATE TABLE properties (
+		property_id SERIAL PRIMARY KEY,
+		name varchar(100),
+		units INTEGER,
+		owner_id INTEGER NOT NULL);
+
+ALTER TABLE properties ADD CONSTRAINT owner_fk
+FOREIGN KEY (owner_id) REFERENCES owners (owner_id)
+ON DELETE NO ACTION;
+
+SELECT *
+FROM owners;
+
+SELECT *
+FROM properties;
+
+--##################################################################
+-- Add some test data
+--##################################################################
+
+INSERT INTO owners (name, age)
+VALUES ('Evy', 28);
+
+INSERT INTO owners (name, age)
+VALUES ('Dexter', 27);
+
+INSERT INTO owners (name, age)
+VALUES ('Kate', 26);
+
+INSERT INTO owners (name, age)
+VALUES ('Hayley', 23);
+
+INSERT INTO owners (name, age)
+VALUES ('Kent', 60);
+
+INSERT INTO owners (name, age)
+VALUES ('Carrie', 57);
+
+INSERT INTO owners (name, age)
+VALUES ('Donald', 43);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('The Brick', 30, 1);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('GA', 22, 2);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Arches', 10, 3);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('The Gate', 27, 4);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Golden Gate', 33, 4);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Meadowlark', 57, 5);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Valley Elder', 27, 6);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Valley Elder - Downtown', 9, 6);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('The Gate', 27, 4);
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Wonderlust', 80, 7);
+
+SELECT * FROM owners;
+
+SELECT * FROM properties;
+
+--#######################################################
+-- Lab assignments
+--#######################################################
+
+
+-- 1. Show all the tables.
+\dt
+	
+-- 2. Show all the users.
+\du
+	
+-- 3. Show all the data in the owners table.
+
+SELECT *
+FROM owners;
+
+-- 4. Show the names of all owners.
+
+SELECT name
+FROM owners;
+
+-- 5. Show the ages of all of the owners in ascending order.
+
+SELECT age
+FROM owners
+ORDER BY age ASC;
+
+-- 6. Show the name of an owner whose name is Donald.
+
+SELECT name
+FROM owners
+WHERE name = 'Donald';
+
+-- 7. Show the age of all owners who are older than 30.
+
+SELECT age
+FROM owners
+WHERE age > 30;
+
+-- 8. Show the name of all owners whose name starts with an E.
+
+SELECT name
+FROM owners
+WHERE name ILIKE 'E%';
+
+-- 9. Add an owner named John who is 33 years old to the owners table.
+
+INSERT INTO owners (name, age)
+VALUES ('John', 33);
+
+/*
+SELECT * FROM owners;
+*/
+
+-- 10. Add an owner named Jane who is 43 years old to the owners table.
+
+INSERT INTO owners (name, age)
+VALUES ('Jane', 43);
+
+/*
+SELECT * FROM owners;
+*/
+
+-- 11. Change Jane's age to 30.
+
+UPDATE owners
+SET age = 30
+WHERE name = 'Jane';
+
+/*
+SELECT * FROM owners WHERE name = 'Jane';
+*/
+
+-- 12. Change Jane's name to Janet.
+
+UPDATE owners
+SET name = 'Janet'
+WHERE name = 'Jane';
+
+/*
+SELECT * FROM owners;
+*/
+
+-- 13. Add a property named Archstone that has 20 units.
+
+INSERT INTO properties (name, units, owner_id)
+VALUES ('Archstone', 20, 2);
+
+/*
+SELECT * FROM properties WHERE name = 'Archstone';
+*/
+
+-- 14. Delete the owner named Jane.
+
+-- 1 rows updated
+DELETE FROM owners
+WHERE name = 'Janet';
+
+/*
+SELECT * FROM owners;
+*/
+
+BEGIN;
+
+DELETE FROM owners
+WHERE name = 'John';
+
+ROLLBACK;
+
+-- 15. Show all of the properties in alphabetical order that are not named Archstone and do not have an id of 3 or 5.
+
+SELECT *
+FROM properties
+WHERE name <> 'Archstone'
+AND property_id not in (3, 5)
+ORDER BY name;
+
+-- 16. Count the total number of rows in the properties table.
+
+SELECT count(1)
+FROM properties;
+
+-- 17. Show the highest age of all owners.
+
+SELECT max(age)
+FROM owners;
+
+-- 18. Show the names of the first three owners in your owners table.
+
+SELECT name
+FROM owners
+LIMIT 3;
+
+-- Bonus (this might require you to look up documentation online)
+-- 1. In the properties table change the name of the column "name" to "property_name".
+
+ALTER TABLE properties
+RENAME COLUMN name to property_name;
+ 
+/*
+SELECT * FROM properties;
+*/
+
+-- 2. Count the total number of properties where the owner_id is between 1 and 3.
+
+SELECT count(1)
+FROM properties
+WHERE owner_id > 1
+AND owner_id < 3;

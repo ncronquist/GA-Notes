@@ -1,0 +1,169 @@
+﻿SELECT * FROM information_schema.columns
+WHERE column_name ILIKE '%location%'
+
+
+-- #SQL Lab
+-- ====
+-- 
+-- For each item below figure out the approriate SQL. Create a text file that contains all of your answers and submit it in the Homework repo.
+-- 
+-- ##Getting Started
+-- 
+-- To get started we'll need to import the booktown.sql file.
+-- 
+-- 1. open terminal
+-- 2. use the command `psql -f booktown.sql`
+-- 3. type `sql` to open your psql console
+-- 4. type \list to ensure the booktown database was successfully completed
+-- 
+-- ##Order
+-- 1. Find all subjects sorted by subject
+
+SELECT * 
+FROM subjects
+ORDER BY subject;
+
+-- 2. Find all subjects sorted by location
+
+SELECT *
+FROM subjects
+ORDER BY location;
+
+-- 
+-- ##Where
+-- 1. Find the book "Little Women"
+
+SELECT *
+FROM books
+WHERE title = 'Little Women';
+
+-- 2. Find all books containing the word "Python"
+
+SELECT *
+FROM books
+WHERE title ILIKE '%python%';
+
+-- 3. Find all subjects with the location "Main St" sort them by subject
+
+SELECT *
+FROM subjects
+WHERE location = 'Main St'
+ORDER BY subject;
+
+-- 
+-- 
+-- ##Joins
+-- 
+-- 1. Find all books about Computers list ONLY book title
+
+SELECT 	*
+FROM 	books b,
+	subjects s
+WHERE	b.subject_id = s.id
+AND	s.subject = 'Computers'
+
+-- 
+-- * Find all books and display ONLY
+-- 	* Book title
+-- 	* Author's first name
+-- 	* Author's last name
+-- 	* Book subject
+
+SELECT	b.title AS Book_Title,
+	a.first_name AS Author_First_Name,
+	a.last_name AS Author_Last_Name,
+	s.subject AS Book_Subject
+FROM 	books b,
+	authors a,
+	subjects s
+WHERE	b.author_id = a.id
+AND	b.subject_id = s.id
+
+-- 
+-- * Find all books that are listed in the stock table
+-- 	* Sort them by retail price (most expensive first)
+-- 	* Display ONLY: title and price
+
+SELECT	b.title,
+	s.retail
+FROM	books b,
+	stock s,
+	editions e
+WHERE	b.id = e.book_id
+AND	e.isbn = s.isbn
+ORDER BY retail DESC
+
+-- 
+-- * Find the book "Dune" and display ONLY
+-- 	* Book title
+-- 	* ISBN number
+-- 	* Publisher name
+-- 	* Retail price
+
+SELECT	b.title,
+	s.isbn,
+	p.name,
+	s.retail 
+FROM	books b,
+	stock s,
+	editions e,
+	publishers p
+WHERE	b.id = e.book_id
+AND	e.isbn = s.isbn
+AND	e.publisher_id = p.id
+AND	b.title = 'Dune'
+
+-- 
+-- * Find all shipments sorted by ship date display ONLY:
+-- 	* Customer first name
+-- 	* Customer last name
+-- 	* ship date
+-- 	* book title
+
+SELECT	c.first_name,
+	c.last_name,
+	s.ship_date,
+	b.title
+FROM	customers c,
+	shipments s,
+	editions e,
+	books b
+WHERE	c.id = s.customer_id
+AND	s.isbn = e.isbn
+AND	e.book_id = b.id
+ORDER BY s.ship_date desc
+
+-- 
+-- ##Grouping and Counting
+-- 
+-- **Note:** These use *GROUP BY* and *COUNT* which was not explicitly covered in class. Luckily, you have the whole internet as your disposal. Go forth and research.
+-- 
+-- 1. Get the COUNT of all books
+
+SELECT COUNT(1)
+FROM books;
+
+-- * Get the COUNT of all Locations
+
+SELECT 	count(Distinct(location))
+FROM	subjects
+
+-- * Get the COUNT of each unique location in the subjects table. Display the count and the location name. (hint: requires GROUP BY).
+
+SELECT	location, count(1)
+FROM	subjects
+GROUP BY location
+
+
+-- * List all books. Display the book_id, title, and a count of how many editions each book has. (hint: requires GROUP BY and JOIN)
+
+SELECT	b.id, b.title, count(1) AS NumberOfEditions
+FROM	books b,
+	editions e
+WHERE	b.id = e.book_id
+GROUP BY b.id, b.title
+
+-- 
+-- 
+-- 
+-- ####YAY! You're done!!

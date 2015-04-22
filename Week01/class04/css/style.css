@@ -1,0 +1,24 @@
+body {
+  font-family: helvetica;
+}
+
+.my-link{
+  color: red;
+  padding: 20px;
+  display: block;
+}
+
+.outerDiv{
+
+}
+
+.innerDiv{
+
+}
+
+.innerDiv:nth-child(2) {
+  background: green;
+  position: absolute; /* Makes this item move to the top will be relative to the next relative or absolute positioned item*/
+  z-index: 99; /* This will be the top */
+
+}

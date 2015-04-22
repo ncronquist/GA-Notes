@@ -1,0 +1,82 @@
+﻿/*
+CREATE TABLE books(
+		id SERIAL PRIMARY KEY,
+		title VARCHAR(200),
+		isbn VARCHAR(20),
+		year INTEGER,
+		description TEXT);
+*/
+
+/*
+Select *
+From books;
+
+SELECT id
+FROM books;
+*/
+/*
+INSERT INTO books (title,isbn,year,description)
+VALUES ('Great Gatsby', 'xx-xx-xx-xxxx',1925,'This is a classic');
+*/
+
+/*
+INSERT INTO books (title,year)
+VALUES ('American Gods',2001);
+*/
+
+/*
+INSERT INTO books (title,year)
+VALUES ('Neverwhere',1996);
+*/
+
+/*
+SELECT *
+FROM books
+ORDER BY id;
+*/
+
+/*
+UPDATE 	books 
+SET 	isbn='1234567', 
+	description='cool book.' 
+WHERE 	id=2;
+*/
+
+CREATE TABLE authors 
+		(id SERIAL PRIMARY  KEY,
+		first_name VARCHAR(100), 
+		last_name VARCHAR(100));
+
+INSERT INTO authors (first_name, last_name)
+VALUES ('F. Scott', 'Fitzgerald');
+
+--#############################################################
+-- Creating a foreign key
+--#############################################################
+
+ALTER TABLE books ADD COLUMN author_id INTEGER;
+ALTER TABLE books ADD CONSTRAINT author_fk 
+FOREIGN KEY (author_id) REFERENCES authors (id)
+ON DELETE NO ACTION;
+
+--#############################################################
+-- End foreing key creation
+--#############################################################
+
+SELECT *
+FROM authors;
+
+SELECT *
+FROM books;
+
+SELECT 	b.title,
+	a.first_name,
+	a.last_name
+FROM 	books b,
+	authors a
+WHERE	b.author_id = a.id;
+
+SELECT *
+FROM books b 
+
+		

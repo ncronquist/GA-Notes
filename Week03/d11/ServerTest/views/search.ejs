@@ -1,0 +1,14 @@
+<% include partials/header %>
+
+  <div class="container">
+    <h2>Search Term:</h2>
+
+    <ul class="list-group">
+      <% otherFoodItems.forEach(function(food) { %>
+        <li class="list-group-item"><%= food %></li>
+      <% }) %>
+    </ul>
+  </div>
+     <!-- <%= taco %> -->
+
+<% include partials/footer %>
