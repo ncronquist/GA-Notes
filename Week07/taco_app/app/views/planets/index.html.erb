@@ -1,0 +1,7 @@
+<h1>This is my Planets Index Page</h1>
+
+<% @planets.each do |p| %>
+  <li><%= link_to p.name, p %></li>
+<% end %>
+
+<%= link_to "Add a new Planet", new_planet_path, :class => 'btn btn-primary' %>
