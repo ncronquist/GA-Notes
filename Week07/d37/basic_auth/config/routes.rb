@@ -26,6 +26,9 @@ Rails.application.routes.draw do
 
   # Test logout by url (for development)
   get 'logout' => 'sessions#destroy'
+
+
+  resources :passwords, only: [:new, :create, :edit, :update]
   # Example resource route with options:
   #   resources :products do
   #     member do

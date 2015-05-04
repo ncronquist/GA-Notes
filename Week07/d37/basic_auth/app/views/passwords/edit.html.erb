@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h1 class="text-center">Change Password</h1>
+
+    <%= bootstrap_form_for @user, url: password_path(@user.code) do |f| %>
+      <%= f.password_field :password, placeholder: "Enter your new password" %>
+      <%= f.submit "Change Password", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
