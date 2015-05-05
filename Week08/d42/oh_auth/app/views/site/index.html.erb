@@ -1,0 +1,8 @@
+<h1>Welcome</h1>
+
+<% if @current_user %>
+  <h4>Hey <%=@current_user[:name]%></h4>
+  <a href="/auth/logout">Logout</a>
+<% else %>
+  <a href="/auth/facebook">Login with Facebook</a>
+<% end %>
