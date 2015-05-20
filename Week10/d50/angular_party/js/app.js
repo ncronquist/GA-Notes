@@ -12,7 +12,7 @@ myApp.run(function() {
 
 var panelCount = 0;
 
-myApp.controller('LeftPanel', ['$scope',function($scope) {
+myApp.controller('LeftPanel', ['$scope', '$log', function($scope, $log) {
   console.log("Left panel running");
   $scope.taco = "yummy";
   $scope.count = 0;
@@ -22,10 +22,11 @@ myApp.controller('LeftPanel', ['$scope',function($scope) {
   }
 }]);
 
-myApp.controller('Todo', ['$scope',function($scope){
+myApp.controller('Todo', ['$scope', '$log',function($scope, $log){
   $scope.tasks = ['build todo list', 'add stuff', 'profit'];
 
   $scope.addTask = function() {
+    $log.info('added a task');
     $scope.tasks.push($scope.newTask);
     $scope.newTask = "";
   }

@@ -13,6 +13,7 @@
   <!-- SCRIPTS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/filters.js"></script>
 </head>
 <body>
 
@@ -24,7 +25,7 @@
 
       <div class="col-sm-4" ng-controller="Todo">
         <ul>
-          <li ng-repeat="task in tasks track by $index">
+          <li ng-repeat="task in (tasks | orderBy: task | limitTo:2) track by $index">
             {{task}}
             <a href="#" ng-click="deleteTask($index)"><span class="glyphicon glyphicon-remove"></span></a>
           </li>
@@ -61,8 +62,10 @@
         <div ng-if="happy">Happy :)</div>
         <div ng-style="{'background-color': name}">Goodbye</div>
         <input type="text" id="inputBootstrap" class="form-control" value="" required="required" ng-model="name">
-        {{name | uppercase}} is {{ happy ? 'happy' : 'not happy'}}<br><br>
-        {{name | currency : "&Euro"}}
+        {{name | reverse:true}} is {{ happy ? 'happy' : 'not happy'}}<br><br>
+        {{name | currency : "&Euro"}}<br><br>
+        {{name | properCase}}<br><br>
+        {{name | ordinal}}<br><br>
         <button class="btn btn-primary" ng-disabled="!happy" ng-click="count = count + 1">{{count}}</button>
         <button class="btn btn-primary" ng-click="toggleHappiness()">{{happy}}</button>
       </div>
