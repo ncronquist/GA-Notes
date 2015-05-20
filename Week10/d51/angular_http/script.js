@@ -3,7 +3,9 @@ console.log("Javascript working!");
 var moviesApp = angular.module("MoviesApp", [])
 
 moviesApp.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-  $scope.searchTerm = JSON.parse(window.localStorage.movie);
+  if (window.localStorage.movie) {
+    $scope.searchTerm = JSON.parse(window.localStorage.movie);
+  }
   $scope.title = "Movies App";
   $scope.movies = {};
 
