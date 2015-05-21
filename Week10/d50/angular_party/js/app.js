@@ -22,6 +22,25 @@ myApp.controller('LeftPanel', ['$scope', '$log', function($scope, $log) {
   }
 }]);
 
+myApp.controller('EditTaskModal', ['$scope', '$log', '$modalInstance', 'task', function($scope, $log, $modalInstance, task){
+
+  $log.info('Modal controller loaded.');
+  $scope.task = task;
+
+  $scope.save = function() {
+    // alert("clicked save");
+
+    $modalInstance.close($scope.task);
+  };
+
+  $scope.cancel = function() {
+    // alert("clicked cancel");
+    $modalInstance.dismiss();
+  }
+
+
+}])
+
 myApp.controller('Todo', ['$scope', '$log', '$modal', function($scope, $log, $modal){
   $scope.tasks = ['build todo list', 'add stuff', 'profit'];
 
@@ -37,7 +56,21 @@ myApp.controller('Todo', ['$scope', '$log', '$modal', function($scope, $log, $mo
     $modal.open({
       // template: 'HI THERE!!!'
       // template URL is based on the root of the web server
-      templateUrl: "edit-task-modal.html"
+      templateUrl: "edit-task-modal.html",
+      controller: 'EditTaskModal',
+      resolve:{
+        task: function() {
+          return $scope.tasks[idx]
+        }
+      }
+    }).result.then(function(updatedTask){
+      // Modal instance.close; AKA save
+      $log.info('User clicked save')
+      $scope.tasks[idx] = updatedTask;
+
+    }, function(){
+      // Modal insance.dismiss or clicking outside the modal; also esc
+      $log.info('User clicked cancel')
     })
   }
 
