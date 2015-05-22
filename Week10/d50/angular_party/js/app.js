@@ -2,7 +2,7 @@ console.log('Loaded!');
 
 // This is how you create a new angular app
 // The empty array is where you would load modules
-var myApp = angular.module('TacoApp', ['ui.bootstrap']);
+var myApp = angular.module('TacoApp', ['directiveAwesome', 'ngAnimate', 'ui.bootstrap']);
 
 // Run is a promise that happens after the app is up and running
 // There is another one called configure that happens before the app is up

@@ -1,0 +1,17 @@
+/*.taco {
+  border: 2px solid pink;
+}*/
+
+.taco.ng-enter {
+  -webkit-animation-name: rollIn;
+  animation-name: rollIn;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.taco.ng-leave {
+  -webkit-animation-name: rotateOut;
+  animation-name: rotateOut;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
