@@ -1,6 +1,10 @@
 <div class="container" ng-app="Bloggy">
 
-  <nav class="navbar navbar-default" role="navigation">
+  <div id="loader" ng-if="$root.loading">
+    Loading...
+  </div>
+
+  <nav class="navbar navbar-default" role="navigation" ng-controller="NavCtrl">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -26,6 +30,12 @@
       </form> -->
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/about">About</a></li>
+        <li ng-show="currentUser" class="navbar-text">{{currentUser.firstName || 'User'}}</li>
+        <li>
+          <a href="#" ng-click="showLogin()" ng-hide="currentUser">Login</a>
+          <a href="#" ng-click="logout()" ng-show="currentUser">Logout</a>
+        </li>
+        <!-- <li>{{taco}}</li> -->
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -38,6 +48,8 @@
       </ul>
     </div><!-- /.navbar-collapse -->
   </nav>
+
+  <alerts></alerts>
 
   <ng-view></ng-view>
 

@@ -1,7 +1,13 @@
-bloggy.controller('HomeCtrl', ['$scope', '$resource', function($scope, $resource) {
+bloggy.controller('HomeCtrl', ['$scope', '$rootScope', 'Post', 'AlertService', function($scope, $rootScope, Post, AlertService) {
   console.log('home controller loaded!');
 
-  var Post = $resource('/api/post/:id');
+  // AlertService.clear();
+  // AlertService.add('danger', 'this is an error');
+  // AlertService.add('info', 'this is some info');
+  // AlertService.add('success', 'this is a success message');
+  // console.log(AlertService.get());
+
+  $rootScope.loading = true;
 
   $scope.posts = [];
 
@@ -11,6 +17,18 @@ bloggy.controller('HomeCtrl', ['$scope', '$resource', function($scope, $resource
   //   // console.log(data);
   //   $scope.posts = data;
   // })
+
+  $scope.createPost = function(){
+    var post = new Post();
+    post.title = "My new post title";
+    post.body = "This is my new post body";
+    post.$save(function(data){
+      console.log(data);
+
+      //refresh post list
+      $scope.loadPosts();
+    });
+  }
 
   $scope.showPost = function(postId) {
     Post.get({id:postId}, function(data) {
@@ -23,17 +41,21 @@ bloggy.controller('HomeCtrl', ['$scope', '$resource', function($scope, $resource
     Post.delete({id:postId}, function(data) {
       console.log(data);
       $scope.loadPosts();
+      AlertService.add('info', 'The post was deleted.');
     })
   }
 
   $scope.loadPosts = function() {
     Post.query(function(data) {
       $scope.posts = data;
+      $rootScope.loading = false;
     })
   }
 
-  Post.query(function(data) {
-    $scope.posts = data;
-  })
+  // Post.query(function(data) {
+  //   $scope.posts = data;
+  // })
+
+  $scope.loadPosts();
 
 }])

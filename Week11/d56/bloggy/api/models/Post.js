@@ -16,6 +16,17 @@ module.exports = {
     body:{
       type:'text',
       required:true
+    },
+
+    //////// ASSOCIATIONS //////
+
+    // Comment is the other model
+    // Via is the association
+
+    // has many comment
+    comments: {
+      collection: 'Comment',
+      via: 'post'
     }
 
   }
