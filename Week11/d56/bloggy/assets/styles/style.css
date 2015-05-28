@@ -1,3 +1,7 @@
+html {
+  font-size: 16px;
+}
+
 #loader{
   position: absolute;
   width: 200px;
@@ -14,4 +18,18 @@
 .navbar-default {
   background-color: #fff;
   border-color: #fff;
+}
+
+md-dialog {
+  /*padding: 40px;*/
+  min-width: 600px;
+}
+
+.md-subheader.md-default-theme {
+  background-color: #ee6e73;
+  margin: 0;
+}
+
+md-dialog md-dialog-content {
+  padding: 0px;
 }

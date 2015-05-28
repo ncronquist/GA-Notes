@@ -13,7 +13,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Add Comment</button>
 </form>
-<div class="well" ng-repeat="comment in post.comments">
+<div class="card-panel teal lighten-2" ng-repeat="comment in post.comments">
   {{comment.body}}
   <br>
   <em class="pull-right">{{comment.createdAt | date: 'short'}}</em>

@@ -1,4 +1,4 @@
-bloggy.controller('HomeCtrl', ['$scope', '$rootScope', 'Post', 'AlertService', function($scope, $rootScope, Post, AlertService) {
+bloggy.controller('HomeCtrl', ['$scope', '$rootScope', 'Post', 'AlertService', 'UserService', function($scope, $rootScope, Post, AlertService, UserService) {
   console.log('home controller loaded!');
 
   // AlertService.clear();
@@ -10,6 +10,12 @@ bloggy.controller('HomeCtrl', ['$scope', '$rootScope', 'Post', 'AlertService', f
   $rootScope.loading = true;
 
   $scope.posts = [];
+
+  $scope.UserService = UserService;
+
+  $scope.$watchCollection('UserService', function() {
+    $scope.currentUser = UserService.currentUser;
+  })
 
 
 

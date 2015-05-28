@@ -1,4 +1,4 @@
-var bloggy = angular.module('Bloggy', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+var bloggy = angular.module('Bloggy', ['ngRoute', 'ngResource', 'ngMaterial']);
 
 bloggy.run(['$rootScope', 'AlertService', 'UserService', function($rootScope, AlertService, UserService) {
   console.log('Bloggy is up and running');
